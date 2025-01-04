@@ -28,26 +28,26 @@ pipeline {
         
         stage('Run Tests') {
             parallel{
-                // stage('Test'){
-                //     agent {
-                //         docker {
-                //             image 'node:18-alpine'
-                //             reuseNode true
-                //         }  
-                //     }
-                //     steps{
-                //         echo "testing"
-                //         sh '''
-                //             #test -f build/index.html
-                //             npm test
-                //         '''
-                //     }
-                //     post {
-                //         always{
-                //             junit 'jest-results/unit.xml'
-                //         }
-                //     }
-                // }
+                stage('Test'){
+                    agent {
+                        docker {
+                            image 'node:18-alpine'
+                            reuseNode true
+                        }  
+                    }
+                    steps{
+                        echo "testing"
+                        sh '''
+                            #test -f build/index.html
+                            npm test
+                        '''
+                    }
+                    post {
+                        always{
+                            junit 'jest-results/unit.xml'
+                        }
+                    }
+                }
     
                 stage('E2E'){
                     agent {
@@ -74,21 +74,21 @@ pipeline {
             }
         }
 
-        // stage('Deploy'){
-        //     agent {
-        //       docker {
-        //             image 'node:18-alpine'
-        //             reuseNode true
-        //         }  
-        //     }
-        //     stages {
-        //         steps {
-        //             sh '''
-        //                 npm install netlify-cli
-        //                 node_moldules/.bin/netlify --version
-        //             '''
-        //         }
-        //     }
-        // }
+        stage('Deploy'){
+            agent {
+              docker {
+                    image 'node:18-alpine'
+                    reuseNode true
+                }  
+            }
+            stages {
+                steps {
+                    sh '''
+                        npm install netlify-cli
+                        node_moldules/.bin/netlify --version
+                    '''
+                }
+            }
+        }
     }
 }
