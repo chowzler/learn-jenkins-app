@@ -62,7 +62,7 @@ pipeline {
                 sh '''
                     npm install netlify-cli
                     node_modules/.bin/netlify --version
-                    echo "Deploying to staging.
+                    echo "Deploying to staging."
                     node_modules/.bin/netlify status
                     node_modules/.bin/netlify deploy --dir=build
                 '''
@@ -96,20 +96,24 @@ pipeline {
                     reuseNode true
                 }  
             }
+
             environment {
                 CI_ENVIRONMENT_URL = 'https://ephemeral-khapse-5527ca.netlify.app'
             }
+
             steps{
                 echo "E2E"
                 sh '''
                     npx playwright test --reporter=line
                 '''
             }
+
             post {
                 always{
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Playwright HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                 }
             }
+
         }
     }
 }
