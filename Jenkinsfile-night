@@ -1,0 +1,9 @@
+pipeline {
+    stages {
+        stage('Build Dockerfile'){
+            steps{
+                sh 'docker build -t my-playwright .'
+            }
+        }
+    }
+}
