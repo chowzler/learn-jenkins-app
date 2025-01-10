@@ -8,6 +8,22 @@ pipeline {
     }
     
     stages {
+        stage('AWS-CLI') {
+            agent {
+                docker {
+                    image 'amazon/aws-cli'
+                    args "--entrypoint=''"
+                }
+
+            steps{
+                withCredentials([usernamePassword(credentialsId: 'AWS-CLI', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
+                    sh '''
+                        aws-cli --version
+
+                    '''                }
+                }
+            }
+        }
         stage('Build') {
             agent {
               docker {
