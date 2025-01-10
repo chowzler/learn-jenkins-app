@@ -18,13 +18,12 @@ pipeline {
             steps{
                 withCredentials([usernamePassword(credentialsId: 'AWS-CLI', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) {
                     sh '''
-                        aws-cli --version
-
+                        aws --version
                     '''                
                 }
             }
         }
-        
+
         stage('Build') {
             agent {
               docker {
