@@ -6,6 +6,9 @@ pipeline {
         // NETLIFY_AUTH_TOKEN = credentials('netlify-token')
         REACT_APP_VERSION = "1.0.$BUILD_ID"
         AWS_DEFAULT_REGION = "us-west-2"
+        AWS_ECS_CLUSTER = "DevCluster"
+        AWS_ECS_SERVICE = "DevCluster"
+        AWS_ECS_TASK = "CICDJenkins-Prod"
     }
     
     stages {
@@ -24,7 +27,8 @@ pipeline {
                         aws --version
                         yum install jq -y
                         LATEST_TASK_REVISION=$(aws ecs register-task-definition --cli-input-json file://aws/task-definition.json | jq '.taskDefinition.revision')
-                        aws ecs update-service --cluster DevCluster --service CICDJenkins-Service-Prod --task-definition CICDJenkins-Prod:$LATEST_TASK_REVISION
+                        aws ecs update-service --cluster $AWS_ECS_CLUSTER --service $AWS_ECS_SERVICE --task-definition $AWS_ECS_TASK:$LATEST_TASK_REVISION
+                        aws ecs wait services-stable --cluster $AWS_ECS_CLUSTER --task $AWS_ECS_TASK:$LATEST_TASK_REVISION
                     '''                
                 }
             }
