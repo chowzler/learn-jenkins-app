@@ -5,7 +5,8 @@ pipeline {
     stages {
         stage('Build Dockerfile'){
             steps{
-                sh 'docker build -f CI/Dockerfile -t my-playwright .'
+                sh 'docker build -f CI/Dockerfile-playwrite -t mallama-playwright .'
+                sh 'docker build -f CI/Dockerfile-aws-cli -t mallama-aws-cli .'
             }
         }
     }
