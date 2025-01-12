@@ -6,7 +6,7 @@
     "containerDefinitions": [
         {
             "name": "CICDJenkins",
-            "image": "nginx:stable-alpine3.20",
+            "image": "396913738012.dkr.ecr.us-west-2.amazonaws.com/myjenkinsapp:#APPLICATION_VERS#",
             "portMappings": [{
                 "name": "nginx-80-tip",
                 "containerPort": 80,
@@ -21,5 +21,5 @@
     "networkMode": "awsvpc",
     "memory": "512",
     "cpu": "256",
-    "executionRoleArn": ""
+    "executionRoleArn": "arn:aws:iam::396913738012:role/ecsTaskExecutionRole"
 }
