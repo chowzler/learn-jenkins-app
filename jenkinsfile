@@ -32,7 +32,7 @@ pipeline {
         stage('AWS-CLI') {
             agent {
                 docker {
-                    image 'amazon/aws-cli'
+                    image 'mallama-aws-cli'
                     reuseNode true
                     args "--entrypoint=''"
                 }
